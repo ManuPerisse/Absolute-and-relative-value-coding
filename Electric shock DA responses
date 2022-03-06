@@ -1,0 +1,124 @@
+clear all
+M=readmatrix('MB109B_Shock_Responses_0V_90V');
+
+%full duration of shock stimulation trace is in the table first column for each animal
+shocktrace=M(:,1);
+
+%GCaMP trace is in the table from the second column to the end with dff1,
+%dff2 for the 2 shock sequences normalized to 
+%different f0 every columm for each fly 
+
+data=size(M,2);
+N=(data-1);
+
+
+framesShock=find(shocktrace(:)>=1);
+
+framesFZero1=find(shocktrace(1:646)==0.5);
+framesFZero2=find(shocktrace(646:end)==0.5)+645;
+
+framesSequence1=find(shocktrace(1:646)>=1);
+framesSequence2=find(shocktrace(646:end)>=1)+645;
+
+framesFirstShock1=find(shocktrace(1:646)>1); %first 5 seconds of 1st sequence
+framesFirstShock2=find(shocktrace(646:end)>1)+645; %first 5 seconds 2nd sequence
+
+
+% Defining and averaging F0 frames
+FZero1 = M(framesFZero1,2:end);
+FZero2 = M(framesFZero2,2:end);
+meanFZero1 = mean(FZero1);
+meanFZero2 = mean(FZero2);
+
+
+% creating a new matrix for each 1min Shock sequence 
+Sequence1 = M(framesSequence1,2:end);
+Sequence2 = M(framesSequence2,2:end);
+% creating a new matrix for each first 3.5seconds of every sequence 
+FirstShock1 = M(framesFirstShock1,2:end);
+FirstShock2 = M(framesFirstShock2,2:end);
+
+% Normalizing frames to F0
+normSeq1 = (Sequence1 - meanFZero1)./meanFZero1;
+normSeq2 = (Sequence2 - meanFZero2)./meanFZero2;
+normFirstShock1 = (FirstShock1 - meanFZero1)./meanFZero1;
+normFirstShock2 = (FirstShock2 - meanFZero2)./meanFZero2;
+
+% extract mean DF/F0 from all 1 min of 12 shocks
+meanSequence1 = mean(mean(normSeq1));
+meanstatSequence1 = mean(normSeq1);
+meanSequence2 = mean(mean(normSeq2));
+meanstatSequence2 = mean(normSeq2);
+% mean SEM DF/F0 during CS+ and CS-
+meanSEMSequence1 = std(mean(normSeq1))/sqrt(N);
+meanSEMSequence2 = std(mean(normSeq2))/sqrt(N);
+
+% extract mean DF/F0 from first shock of each sequence
+meanFirstShock1 = mean(mean(normFirstShock1));
+meanstatFirstShock1 = mean(normFirstShock1);
+meanFirstShock2 = mean(mean(normFirstShock2));
+meanstatFirstShock2 = mean(normFirstShock2);
+% mean SEM DF/F0 for the 1st and 2nd shock
+meanSEMFirstShock1 = std(mean(normFirstShock1))/sqrt(N);
+meanSEMFirstShock2 = std(mean(normFirstShock2))/sqrt(N);
+
+
+% mean peak DF/F0 for whole 1min sequence
+peakSequence1 = mean(max(normSeq1));
+peakstatSequence1 = max(normSeq1);
+peakSequence2 = mean(max(normSeq2));
+peakstatSequence2 = max(normSeq2);
+% SEM peak DF/F0 for whole 1min sequence
+peakSEMSequence1 = std(max(normSeq1))/sqrt(N);
+peakSEMSequence2 = std(max(normSeq2))/sqrt(N);
+
+
+% mean peak DF/F0 for first shock stimulation in every sequence
+peakFirstShock1 = mean(max(normFirstShock1));
+peakstatFirstShock1 = max(normFirstShock1);
+peakFirstShock2 = mean(max(normFirstShock2));
+peakstatFirstShock2 = max(normFirstShock2);
+% SEM peak DF/F0 for first shock stimulation in every sequence
+peakSEMFirstShock1 = std(max(normFirstShock1))/sqrt(N);
+peakSEMSFirstShock2 = std(max(normFirstShock2))/sqrt(N);
+
+
+% extract mean integral DF/F0 for whole 1min sequence
+intSequence1 = mean(sum(normSeq1));
+intstatSequence1 = sum(normSeq1);
+intSequence2 = mean(sum(normSeq2));
+intstatSequence2 = sum(normSeq2);
+% calculate SEM of integral DF/F0 for whole 1min sequence
+intSEMSequence1 = std(sum(normSeq1))/sqrt(N);
+intSEMSequence2 = std(sum(normSeq2))/sqrt(N);
+
+
+
+%for figure mean and SEM
+shockSequence1 = M(33:756,2:end);
+normshockSequence1 = (shockSequence1 - meanFZero1)./meanFZero1;
+traceshockSequence1 = mean(normshockSequence1,2);
+traceshockSequence1SEM = std(normshockSequence1,0,2)/sqrt(N);
+shockSequence2 = M(694:1292,2:end);
+normshockSequence2 = (shockSequence2 - meanFZero2)./meanFZero2;
+traceshockSequence2 = mean(normshockSequence2,2);
+traceshockSequence2SEM = std(normshockSequence2,0,2)/sqrt(N);
+
+%for figure mean and SEM for first 5sec of sequence
+shockFirstShock1 = M(175:218,2:end);
+normshockFirstShock1 = (shockFirstShock1 - meanFZero1)./meanFZero1;
+traceFirstShock1 = mean(normshockFirstShock1,2);
+traceFirstShock1SEM = std(normshockFirstShock1,0,2)/sqrt(N);
+shockFirstShock2 = M(836:879,2:end);
+normshockFirstShock2 = (shockFirstShock2 - meanFZero2)./meanFZero2;
+traceFirstShock2 = mean(normshockFirstShock2,2);
+traceFirstShock2SEM = std(normshockFirstShock2,0,2)/sqrt(N);
+
+
+
+
+hold on
+
+plot(traceshockSequence1, '-r', 'linewidth',3);
+
+plot(traceshockSequence2, '-b', 'linewidth',3);
