@@ -1,0 +1,156 @@
+clear all
+M=csvread('Matlab_analysis_OCT90V_MCH0V_MB112C.csv',1,0);
+
+data=size(M,2);
+N=(data-1)/4;
+
+%odourtrace is in the table first column
+odourtrace=M(:,1);
+
+%every value in odourtrace >500 corresponding to odour presentation will 
+%equal five hundred
+odourtrace(odourtrace(:)>500)=500;
+
+%GCaMP trace is in the table from the second column to the end with dff1,
+%dff2, dff3 and dff4 for the four odour presentation normalized to 
+%different f0 every four columm for each fly 
+trace1=M(:,2:4:end);
+trace2=M(:,3:4:end);
+trace3=M(:,4:4:end);
+trace4=M(:,5:4:end);
+
+traceCSplus1=mean(trace1,2);
+traceCSminus1=mean(trace2,2);
+traceCSplus2=mean(trace3,2);
+traceCSminus2=mean(trace3,2);
+
+%defining the odour presentation
+odourframes=find(odourtrace(:)==500);
+odour1frames=find(odourtrace(1:250)==500);
+odour2frames=find(odourtrace(250:500)==500)+249;
+odour3frames=find(odourtrace(500:750)==500)+499;
+odour4frames=find(odourtrace(750:end)==500)+749;
+
+% creating a new matrix for each odour presentation
+CSplus1 = M(odour1frames,2:4:end);
+CSminus1 = M(odour2frames,3:4:end);
+CSplus2 = M(odour3frames,4:4:end);
+CSminus2 = M(odour4frames,5:4:end);
+
+% average CS+ and CS- matrices
+CSplus = (CSplus1+CSplus2)/2;
+CSminus = (CSminus1+CSminus2)/2;
+
+% extract mean DF/F0 from five seconds of odour presentation
+CSplusmean = mean(mean(CSplus));
+CSplusmeanstat = mean(CSplus);
+CSminusmean = mean(mean(CSminus));
+CSminusmeanstat = mean(CSminus);
+
+% extract mean DF/F0 from five seconds of first odour presentation
+CSplusmean1 = mean(mean(CSplus1));
+CSplusmeanstat1 = mean(CSplus1);
+CSminusmean1 = mean(mean(CSminus1));
+CSminusmeanstat1 = mean(CSminus1);
+
+% mean SEM DF/F0 during CS+ and CS-
+CSplusmeanSEM = std(mean(CSplus))/sqrt(N);
+CSminusmeanSEM = std(mean(CSminus))/sqrt(N);
+
+% mean1 SEM DF/F0 during CS+ and CS-
+CSplusmeanSEM1 = std(mean(CSplus1))/sqrt(N);
+CSminusmeanSEM1 = std(mean(CSminus1))/sqrt(N);
+
+% mean peak DF/F0 from five seconds of odour presentation
+CSpluspeak = mean(max(CSplus));
+CSpluspeakstat = max(CSplus);
+CSminuspeak = mean(max(CSminus));
+CSminuspeakstat = max(CSminus);
+
+% mean1 peak DF/F0 from five seconds of odour presentation
+CSpluspeak1 = mean(max(CSplus1));
+CSpluspeakstat1 = max(CSplus1);
+CSminuspeak1 = mean(max(CSminus1));
+CSminuspeakstat1 = max(CSminus1);
+
+% SEM peak DF/F0 from five seconds of odour presentation
+CSpluspeakSEM = std(max(CSplus))/sqrt(N);
+CSminuspeakSEM = std(max(CSminus))/sqrt(N);
+
+% peak1 SEM DF/F0 from five seconds of odour presentation
+CSpluspeakSEM1 = std(max(CSplus1))/sqrt(N);
+CSminuspeakSEM1 = std(max(CSminus1))/sqrt(N);
+
+% extract mean integral DF/F0 from five seconds of odour presentation
+CSplusint = mean(sum(CSplus));
+CSplusintstat = sum(CSplus);
+CSminusint = mean(sum(CSminus));
+CSminusintstat = sum(CSminus);
+
+% extract mean1 integral DF/F0 from five seconds of odour presentation
+CSplusint1 = mean(sum(CSplus1));
+CSplusintstat1 = sum(CSplus1);
+CSminusint1 = mean(sum(CSminus1));
+CSminusintstat1 = sum(CSminus1);
+
+% calculate SEM of integral DF/F0 from five seconds of odour presentation
+CSplusintSEM = std(sum(CSplus))/sqrt(N);
+CSminusintSEM = std(sum(CSminus))/sqrt(N);
+
+% calculate SEM of integral1 DF/F0 from five seconds of odour presentation
+CSplusintSEM1 = std(sum(CSplus1))/sqrt(N);
+CSminusintSEM1 = std(sum(CSminus1))/sqrt(N);
+
+%calculate the relative CS+/CS- value
+relative = CSplus-CSminus;
+relativemean = mean(mean(relative));
+relativemeanSEM = std(mean(relative))/sqrt(N);
+relativepeak = max(mean(relative));
+relativempeakSEM = std(max(relative))/sqrt(N);
+relativeint = mean(sum(relative));
+relativeintSEM = std(sum(relative))/sqrt(N);
+
+%calculate the relative CS+/CS- value for first odour presentation
+relative1 = CSplus1-CSminus1;
+relativemean1 = mean(mean(relative1));
+relativemeanSEM1 = std(mean(relative1))/sqrt(N);
+relativepeak1 = max(mean(relative1));
+relativempeakSEM1 = std(max(relative1))/sqrt(N);
+relativeint1 = mean(sum(relative1));
+relativeintSEM1 = std(sum(relative1))/sqrt(N);
+
+%for figure mean and SEM
+odourCSplus1 = M(odour1frames-20:odour1frames+60,2:4:end);
+odourCSminus1 = M(odour2frames-20:odour2frames+60,3:4:end);
+odourCSplus2 = M(odour3frames-20:odour3frames+60,4:4:end);
+odourCSminus2 = M(odour4frames-20:odour4frames+60,5:4:end);
+
+odourCSplusframe = (odourCSplus1+odourCSplus2)/2;
+odourCSminusframe = (odourCSminus1+odourCSminus2)/2;
+
+odourCSplusframemean = mean(odourCSplusframe,2);
+odourCSminusframemean = mean(odourCSminusframe,2);
+
+odourCSplusframeSEM = std(odourCSplusframe,0,2)/sqrt(N);
+odourCSminusframeSEM = std(odourCSminusframe,0,2)/sqrt(N);
+
+% for figure mean and SEM first and second odour presentation
+odourCSplus1mean = mean(odourCSplus1,2);
+odourCSminus1mean = mean(odourCSminus1,2);
+
+odourCSplus1SEM = std(odourCSplus1,0,2)/sqrt(N);
+odourCSminus1SEM = std(odourCSminus1,0,2)/sqrt(N);
+
+odourCSplus2mean = mean(odourCSplus2,2);
+odourCSminus2mean = mean(odourCSminus2,2);
+
+odourCSplus2SEM = std(odourCSplus2,0,2)/sqrt(N);
+odourCSminus2SEM = std(odourCSminus2,0,2)/sqrt(N);
+
+hold on
+plot(odourCSplusframemean)
+plot(odourCSminusframemean)
+
+
+
+
