@@ -1,5 +1,5 @@
 clear all
-M=csvread('Matlab_analysis_OCT90V_MCH0V_MB112C.csv',1,0);
+M=csvread('file.csv',1,0);
 
 data=size(M,2);
 N=(data-1)/4;
