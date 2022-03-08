@@ -1,5 +1,5 @@
 clear all
-M=readmatrix('MB109B-GCaMP6m_Learning_IAA0V_OCT0V_MCH0V');
+M=readmatrix('file.csv');
 
 %GCaMP trace is in the table from the second column to the end
 %the first coclumn represent the different stimulations matched with
