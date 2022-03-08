@@ -1,5 +1,5 @@
 clear all
-M=readmatrix('MB109B_Shock_Responses_0V_90V');
+M=readmatrix('file.csv');
 
 %full duration of shock stimulation trace is in the table first column for each animal
 shocktrace=M(:,1);
