@@ -8,5 +8,394 @@ odourtrace=M(:,1);
 data=size(M,2);
 N=(data-1);
 
+                % DEFINE ODOUR FRAMES FOR:
+                
+                % F0 for each odour
+                % Odour alone before the first shock (16 frames)
+                % The first shock (15 frames after the odour alone)
+                % The first part of training (189 frames)
+                % The second part of training (189 frames)
+                % The whole 1 min of odour+12 shocks training
+                % The odour OFF response (65 frames)
+                % The training + OFF response
+                
+                
 
-UPDATING THIS CODE
+% Determining of each framewindow for the different stimulations
+% determine F0 framewindow before each of three odour presentation 
+framesFZero1=find(odourtrace(1:750)==0.5);
+framesFZero2=find(odourtrace(750:1400)==0.5)+749;
+framesFZero3=find(odourtrace(1400:1952)==0.5)+1399;
+
+% determine framewindow where odor presentation is ALONE for each odour
+%before the first shock
+framesOdour1Alone1=find(odourtrace(1:750)==1);
+framesOdour2Alone1=find(odourtrace(750:1400)==1)+749;
+framesOdour3Alone1=find(odourtrace(1400:1952)==1)+1399;
+% determine framewindow where odor presentation with the First shock
+framesOdour1Shock1=find(odourtrace(1:750)==1.5);
+framesOdour2Shock1=find(odourtrace(750:1400)==1.5)+749;
+framesOdour3Shock1=find(odourtrace(1400:1952)==1.5)+1399;
+
+% determine framewindow where odor presentation is ALONE for each odour
+%before the second shock
+framesOdour1Alone2=find(odourtrace(1:750)==2);
+framesOdour2Alone2=find(odourtrace(750:1400)==2)+749;
+framesOdour3Alone2=find(odourtrace(1400:1952)==2)+1399;
+ % determine framewindow for odor presentation with the 2nd shock 
+framesOdour1Shock2=find(odourtrace(1:750)==2.5);
+framesOdour2Shock2=find(odourtrace(750:1400)==2.5)+749;
+framesOdour3Shock2=find(odourtrace(1400:1952)==2.5)+1399;
+ 
+% determine framewindow where odor presentation is ALONE for each odour
+%before the third shock
+framesOdour1Alone3=find(odourtrace(1:750)==3);
+framesOdour2Alone3=find(odourtrace(750:1400)==3)+749;
+framesOdour3Alone3=find(odourtrace(1400:1952)==3)+1399;
+% determine framwindow for odor presentation with the 3rd shock
+framesOdour1Shock3=find(odourtrace(1:750)==3.5);
+framesOdour2Shock3=find(odourtrace(750:1400)==3.5)+749;
+framesOdour3Shock3=find(odourtrace(1400:1952)==3.5)+1399;
+
+% determine framewindow where odor presentation is ALONE for each odour
+%before the fourth shock
+framesOdour1Alone4=find(odourtrace(1:750)==4);
+framesOdour2Alone4=find(odourtrace(750:1400)==4)+749;
+framesOdour3Alone4=find(odourtrace(1400:1952)==4)+1399;
+% determine framewindow where odor presentation with the 4th shock
+framesOdour1Shock4=find(odourtrace(1:750)==4.5);
+framesOdour2Shock4=find(odourtrace(750:1400)==4.5)+749;
+framesOdour3Shock4=find(odourtrace(1400:1952)==4.5)+1399;
+ 
+% determine framewindow where odor presentation is ALONE for each odour
+%before the fifth shock
+framesOdour1Alone5=find(odourtrace(1:750)==5);
+framesOdour2Alone5=find(odourtrace(750:1400)==5)+749;
+framesOdour3Alone5=find(odourtrace(1400:1952)==5)+1399;
+% determine framewindow for odor presentation with the 5th shock 
+framesOdour1Shock5=find(odourtrace(1:750)==5.5);
+framesOdour2Shock5=find(odourtrace(750:1400)==5.5)+749;
+framesOdour3Shock5=find(odourtrace(1400:1952)==5.5)+1399;
+ 
+% determine framewindow where odor presentation is ALONE for each odour
+% before the sixth shock
+framesOdour1Alone6=find(odourtrace(1:750)==6);
+framesOdour2Alone6=find(odourtrace(750:1400)==6)+749;
+framesOdour3Alone6=find(odourtrace(1400:1952)==6)+1399;
+% determine framwindow for odor presentation with the 6th shock
+framesOdour1Shock6=find(odourtrace(1:750)==6.5);
+framesOdour2Shock6=find(odourtrace(750:1400)==6.5)+749;
+framesOdour3Shock6=find(odourtrace(1400:1952)==6.5)+1399;
+
+% determine framewindow where odor presentation is ALONE for each odour
+% before the seventh shock
+framesOdour1Alone7=find(odourtrace(1:750)==7);
+framesOdour2Alone7=find(odourtrace(750:1400)==7)+749;
+framesOdour3Alone7=find(odourtrace(1400:1952)==7)+1399;
+% determine framewindow where odor presentation with the 7th shock
+framesOdour1Shock7=find(odourtrace(1:750)==7.5);
+framesOdour2Shock7=find(odourtrace(750:1400)==7.5)+749;
+framesOdour3Shock7=find(odourtrace(1400:1952)==7.5)+1399;
+ 
+% determine framewindow where odor presentation is ALONE for each odour
+% before the eighth shock
+framesOdour1Alone8=find(odourtrace(1:750)==8);
+framesOdour2Alone8=find(odourtrace(750:1400)==8)+749;
+framesOdour3Alone8=find(odourtrace(1400:1952)==8)+1399;
+% determine framewindow for odor presentation with the 8th shock 
+framesOdour1Shock8=find(odourtrace(1:750)==8.5);
+framesOdour2Shock8=find(odourtrace(750:1400)==8.5)+749;
+framesOdour3Shock8=find(odourtrace(1400:1952)==8.5)+1399;
+ 
+% determine framewindow where odor presentation is ALONE for each odour
+% before the 9th shock
+framesOdour1Alone9=find(odourtrace(1:750)==9);
+framesOdour2Alone9=find(odourtrace(750:1400)==9)+749;
+framesOdour3Alone9=find(odourtrace(1400:1952)==9)+1399;
+% determine framwindow for odor presentation with the 9th shock
+framesOdour1Shock9=find(odourtrace(1:750)==9.5);
+framesOdour2Shock9=find(odourtrace(750:1400)==9.5)+749;
+framesOdour3Shock9=find(odourtrace(1400:1952)==9.5)+1399;
+
+% determine framewindow where odor presentation is ALONE for each odour
+% before the 10th shock
+framesOdour1Alone10=find(odourtrace(1:750)==10);
+framesOdour2Alone10=find(odourtrace(750:1400)==10)+749;
+framesOdour3Alone10=find(odourtrace(1400:1952)==10)+1399;
+% determine framewindow where odor presentation with the 10th shock
+framesOdour1Shock10=find(odourtrace(1:750)==10.5);
+framesOdour2Shock10=find(odourtrace(750:1400)==10.5)+749;
+framesOdour3Shock10=find(odourtrace(1400:1952)==10.5)+1399;
+ 
+% determine framewindow where odor presentation is ALONE for each odour
+% before the 11th shock
+framesOdour1Alone11=find(odourtrace(1:750)==11);
+framesOdour2Alone11=find(odourtrace(750:1400)==11)+749;
+framesOdour3Alone11=find(odourtrace(1400:1952)==11)+1399;
+% determine framewindow for odor presentation with the 11th shock 
+framesOdour1Shock11=find(odourtrace(1:750)==11.5);
+framesOdour2Shock11=find(odourtrace(750:1400)==11.5)+749;
+framesOdour3Shock11=find(odourtrace(1400:1952)==11.5)+1399;
+ 
+% determine framewindow where odor presentation is ALONE for each odour
+% before the 12th shock
+framesOdour1Alone12=find(odourtrace(1:750)==12);
+framesOdour2Alone12=find(odourtrace(750:1400)==12)+749;
+framesOdour3Alone12=find(odourtrace(1400:1952)==12)+1399;
+
+%%%% Note that the 12th shock overlaps with the odour OFF 
+% determine framewindow during the 12th shock.
+framesOdour1Shock12=find(odourtrace(1:750)==12.5);
+framesOdour2Shock12=find(odourtrace(750:1400)==12.5)+749;
+framesOdour3Shock12=find(odourtrace(1400:1952)==12.5)+1399;
+
+% determine framewindow after the 12th shock considered as OFF response
+framesOdour1OFF=find(odourtrace(1:750)==13);
+framesOdour2OFF=find(odourtrace(750:1400)==13)+749;
+framesOdour3OFF=find(odourtrace(1400:1952)==13)+1399;
+
+
+% determine framewindow for each odour (1 min) divided in four
+% parts/quarters
+
+framesOdour1Firstquarter = cat(1,framesOdour1Alone1,framesOdour1Shock1);
+framesOdour1Firstquarter = cat(1,framesOdour1Firstquarter,framesOdour1Alone2);
+framesOdour1Firstquarter = cat(1,framesOdour1Firstquarter,framesOdour1Shock2);
+framesOdour1Firstquarter = cat(1,framesOdour1Firstquarter,framesOdour1Alone3);
+framesOdour1Firstquarter = cat(1,framesOdour1Firstquarter,framesOdour1Shock3);
+framesOdour1Secondquarter = cat(1,framesOdour1Alone4,framesOdour1Shock4);
+framesOdour1Secondquarter = cat(1,framesOdour1Secondquarter,framesOdour1Alone5);
+framesOdour1Secondquarter = cat(1,framesOdour1Secondquarter,framesOdour1Shock5);
+framesOdour1Secondquarter = cat(1,framesOdour1Secondquarter,framesOdour1Alone6);
+framesOdour1Secondquarter = cat(1,framesOdour1Secondquarter,framesOdour1Shock6);
+framesOdour1Thirdquarter = cat(1,framesOdour1Alone7,framesOdour1Shock7);
+framesOdour1Thirdquarter = cat(1,framesOdour1Thirdquarter,framesOdour1Alone8);
+framesOdour1Thirdquarter = cat(1,framesOdour1Thirdquarter,framesOdour1Shock8);
+framesOdour1Thirdquarter = cat(1,framesOdour1Thirdquarter,framesOdour1Alone9);
+framesOdour1Thirdquarter = cat(1,framesOdour1Thirdquarter,framesOdour1Shock9);
+framesOdour1Fourthquarter = cat(1,framesOdour1Alone10,framesOdour1Shock10);
+framesOdour1Fourthquarter = cat(1,framesOdour1Fourthquarter,framesOdour1Alone11);
+framesOdour1Fourthquarter = cat(1,framesOdour1Fourthquarter,framesOdour1Shock11);
+framesOdour1Fourthquarter = cat(1,framesOdour1Fourthquarter,framesOdour1Alone12);
+framesOdour1Fourthquarter = cat(1,framesOdour1Fourthquarter,framesOdour1Shock12);
+
+framesOdour2Firstquarter = cat(1,framesOdour2Alone1,framesOdour2Shock1);
+framesOdour2Firstquarter = cat(1,framesOdour2Firstquarter,framesOdour2Alone2);
+framesOdour2Firstquarter = cat(1,framesOdour2Firstquarter,framesOdour2Shock2);
+framesOdour2Firstquarter = cat(1,framesOdour2Firstquarter,framesOdour2Alone3);
+framesOdour2Firstquarter = cat(1,framesOdour2Firstquarter,framesOdour2Shock3);
+framesOdour2Secondquarter = cat(1,framesOdour2Alone4,framesOdour2Shock4);
+framesOdour2Secondquarter = cat(1,framesOdour2Secondquarter,framesOdour2Alone5);
+framesOdour2Secondquarter = cat(1,framesOdour2Secondquarter,framesOdour2Shock5);
+framesOdour2Secondquarter = cat(1,framesOdour2Secondquarter,framesOdour2Alone6);
+framesOdour2Secondquarter = cat(1,framesOdour2Secondquarter,framesOdour2Shock6);
+framesOdour2Thirdquarter = cat(1,framesOdour2Alone7,framesOdour2Shock7);
+framesOdour2Thirdquarter = cat(1,framesOdour2Thirdquarter,framesOdour2Alone8);
+framesOdour2Thirdquarter = cat(1,framesOdour2Thirdquarter,framesOdour2Shock8);
+framesOdour2Thirdquarter = cat(1,framesOdour2Thirdquarter,framesOdour2Alone9);
+framesOdour2Thirdquarter = cat(1,framesOdour2Thirdquarter,framesOdour2Shock9);
+framesOdour2Fourthquarter = cat(1,framesOdour2Alone10,framesOdour2Shock10);
+framesOdour2Fourthquarter = cat(1,framesOdour2Fourthquarter,framesOdour2Alone11);
+framesOdour2Fourthquarter = cat(1,framesOdour2Fourthquarter,framesOdour2Shock11);
+framesOdour2Fourthquarter = cat(1,framesOdour2Fourthquarter,framesOdour2Alone12);
+framesOdour2Fourthquarter = cat(1,framesOdour2Fourthquarter,framesOdour2Shock12);
+
+framesOdour3Firstquarter = cat(1,framesOdour3Alone1,framesOdour3Shock1);
+framesOdour3Firstquarter = cat(1,framesOdour3Firstquarter,framesOdour3Alone2);
+framesOdour3Firstquarter = cat(1,framesOdour3Firstquarter,framesOdour3Shock2);
+framesOdour3Firstquarter = cat(1,framesOdour3Firstquarter,framesOdour3Alone3);
+framesOdour3Firstquarter = cat(1,framesOdour3Firstquarter,framesOdour3Shock3);
+framesOdour3Secondquarter = cat(1,framesOdour3Alone4,framesOdour3Shock4);
+framesOdour3Secondquarter = cat(1,framesOdour3Secondquarter,framesOdour3Alone5);
+framesOdour3Secondquarter = cat(1,framesOdour3Secondquarter,framesOdour3Shock5);
+framesOdour3Secondquarter = cat(1,framesOdour3Secondquarter,framesOdour3Alone6);
+framesOdour3Secondquarter = cat(1,framesOdour3Secondquarter,framesOdour3Shock6);
+framesOdour3Thirdquarter = cat(1,framesOdour3Alone7,framesOdour3Shock7);
+framesOdour3Thirdquarter = cat(1,framesOdour3Thirdquarter,framesOdour3Alone8);
+framesOdour3Thirdquarter = cat(1,framesOdour3Thirdquarter,framesOdour3Shock8);
+framesOdour3Thirdquarter = cat(1,framesOdour3Thirdquarter,framesOdour3Alone9);
+framesOdour3Thirdquarter = cat(1,framesOdour3Thirdquarter,framesOdour3Shock9);
+framesOdour3Fourthquarter = cat(1,framesOdour3Alone10,framesOdour3Shock10);
+framesOdour3Fourthquarter = cat(1,framesOdour3Fourthquarter,framesOdour3Alone11);
+framesOdour3Fourthquarter = cat(1,framesOdour3Fourthquarter,framesOdour3Shock11);
+framesOdour3Fourthquarter = cat(1,framesOdour3Fourthquarter,framesOdour3Alone12);
+framesOdour3Fourthquarter = cat(1,framesOdour3Fourthquarter,framesOdour3Shock12);
+
+        % CREATING MATRICES for the different odour Frames
+           %WITH  INTEGRAL CALCULATION           
+        
+        % calculate mean F0 for each odour presentation
+                            
+% creating a matrix for F0 values for each odour
+FZero1 = M(framesFZero1,2:end);
+FZero2 = M(framesFZero2,2:end);
+FZero3 = M(framesFZero3,2:end);
+ 
+% calcul of mean F0 for each odour
+meanFZero1 = mean(FZero1);
+meanFZero2 = mean(FZero2);
+meanFZero3 = mean(FZero3);
+
+%%%%%%% quarters part of training (94 or 95 frames)   %%%%%%%%
+                  % for each odour presentation
+                           
+% creating a matrix for each quarters of the 1min training for each odour
+% Odour 1
+Odour1Firstquarter = M(framesOdour1Firstquarter,2:end);
+Odour1Secondquarter = M(framesOdour1Secondquarter,2:end);
+Odour1Thirdquarter = M(framesOdour1Thirdquarter,2:end);
+Odour1Fourthquarter = M(framesOdour1Fourthquarter,2:end);
+% Odour 2
+Odour2Firstquarter = M(framesOdour2Firstquarter,2:end);
+Odour2Secondquarter = M(framesOdour2Secondquarter,2:end);
+Odour2Thirdquarter = M(framesOdour2Thirdquarter,2:end);
+Odour2Fourthquarter = M(framesOdour2Fourthquarter,2:end);
+% Odour 3
+Odour3Firstquarter = M(framesOdour3Firstquarter,2:end);
+Odour3Secondquarter = M(framesOdour3Secondquarter,2:end);
+Odour3Thirdquarter = M(framesOdour3Thirdquarter,2:end);
+Odour3Fourthquarter = M(framesOdour3Fourthquarter,2:end);
+
+% Normalizing frames to F0 for each odour
+% Odour 1
+Odour1FirstquarternormF0 = (Odour1Firstquarter - meanFZero1)./meanFZero1;
+Odour1SecondquarternormF0 = (Odour1Secondquarter - meanFZero1)./meanFZero1;
+Odour1ThirdquarternormF0 = (Odour1Thirdquarter - meanFZero1)./meanFZero1;
+Odour1FourthquarternormF0 = (Odour1Fourthquarter - meanFZero1)./meanFZero1;
+% Odour 2
+Odour2FirstquarternormF0 = (Odour2Firstquarter - meanFZero2)./meanFZero2;
+Odour2SecondquarternormF0 = (Odour2Secondquarter - meanFZero2)./meanFZero2;
+Odour2ThirdquarternormF0 = (Odour2Thirdquarter - meanFZero2)./meanFZero2;
+Odour2FourthquarternormF0 = (Odour2Fourthquarter - meanFZero2)./meanFZero2;
+% Odour 3
+Odour3FirstquarternormF0 = (Odour3Firstquarter - meanFZero3)./meanFZero3;
+Odour3SecondquarternormF0 = (Odour3Secondquarter - meanFZero3)./meanFZero3;
+Odour3ThirdquarternormF0 = (Odour3Thirdquarter - meanFZero3)./meanFZero3;
+Odour3FourthquarternormF0 = (Odour3Fourthquarter - meanFZero3)./meanFZero3;
+
+% extract mean integral DF/F0 for the whole Odour 1, 2 and 3
+% Odour 1
+intstatOdour1Firstquarter = sum(Odour1FirstquarternormF0);
+intstatOdour1Secondquarter = sum(Odour1SecondquarternormF0);
+intstatOdour1Thirdquarter = sum(Odour1ThirdquarternormF0);
+intstatOdour1Fourthquarter = sum(Odour1FourthquarternormF0);
+% Odour 2
+intstatOdour2Firstquarter = sum(Odour2FirstquarternormF0);
+intstatOdour2Secondquarter = sum(Odour2SecondquarternormF0);
+intstatOdour2Thirdquarter = sum(Odour2ThirdquarternormF0);
+intstatOdour2Fourthquarter = sum(Odour2FourthquarternormF0);
+% Odour 3
+intstatOdour3Firstquarter = sum(Odour3FirstquarternormF0);
+intstatOdour3Secondquarter = sum(Odour3SecondquarternormF0);
+intstatOdour3Thirdquarter = sum(Odour3ThirdquarternormF0);
+intstatOdour3Fourthquarter = sum(Odour3FourthquarternormF0);
+
+      % OFF response of each odour presentation
+                           
+% creating a matrix for the whole training + OFF response for each odour
+Odour1OFF = M(framesOdour1OFF,2:end);
+Odour2OFF = M(framesOdour2OFF,2:end);
+Odour3OFF = M(framesOdour3OFF,2:end);
+ % Normalizing frames to F0 for Odour 1, 2 and 3
+Odour1OFFnormF0 = (Odour1OFF - meanFZero1)./meanFZero1;
+Odour2OFFnormF0 = (Odour2OFF - meanFZero2)./meanFZero2;
+Odour3OFFnormF0 = (Odour3OFF - meanFZero3)./meanFZero3;
+ % extract mean integral DF/F0 for the whole Odour 1, 2 and 3
+intstatOdour1OFF = sum(Odour1OFFnormF0);
+intstatOdour2OFF = sum(Odour2OFFnormF0);
+intstatOdour3OFF = sum(Odour3OFFnormF0);
+
+
+           % Odour subtraction
+  
+           % Odour3 - Odour2        
+
+Odour3SubOdour2OFF = (Odour3OFFnormF0 - Odour2OFFnormF0);
+intstatOdour3SubOdour2OFF = sum(Odour3SubOdour2OFF);
+
+Odour3SubOdour2Firstquarter = (Odour3FirstquarternormF0 - Odour2FirstquarternormF0);
+intstatOdour3SubOdour2Firstquarter = sum(Odour3SubOdour2Firstquarter);
+
+Odour3SubOdour2Secondquarter = (Odour3SecondquarternormF0 - Odour2SecondquarternormF0);
+intstatOdour3SubOdour2Secondquarter = sum(Odour3SubOdour2Secondquarter);
+
+Odour3SubOdour2Thirdquarter = (Odour3ThirdquarternormF0 - Odour2ThirdquarternormF0);
+intstatOdour3SubOdour2Thirdquarter = sum(Odour3SubOdour2Thirdquarter);
+
+Odour3SubOdour2Fourthquarter = (Odour3FourthquarternormF0 - Odour2FourthquarternormF0);
+intstatOdour3SubOdour2Fourthquarter = sum(Odour3SubOdour2Fourthquarter);
+
+
+            % Odour2 - Odour1 
+          
+Odour2SubOdour1OFF = (Odour2OFFnormF0 - Odour1OFFnormF0);
+intstatOdour2SubOdour1OFF = sum(Odour2SubOdour1OFF);
+
+Odour2SubOdour1Firstquarter = (Odour2FirstquarternormF0 - Odour1FirstquarternormF0);
+intstatOdour2SubOdour1Firstquarter = sum(Odour2SubOdour1Firstquarter);
+
+Odour2SubOdour1Secondquarter = (Odour2SecondquarternormF0 - Odour1SecondquarternormF0);
+intstatOdour2SubOdour1Secondquarter = sum(Odour2SubOdour1Secondquarter);
+
+Odour2SubOdour1Thirdquarter = (Odour2ThirdquarternormF0 - Odour1ThirdquarternormF0);
+intstatOdour2SubOdour1Thirdquarter = sum(Odour2SubOdour1Thirdquarter);
+
+Odour2SubOdour1Fourthquarter = (Odour2FourthquarternormF0 - Odour1FourthquarternormF0);
+intstatOdour2SubOdour1Fourthquarter = sum(Odour2SubOdour1Fourthquarter);
+
+
+                     % Odour3 - Odour1 
+
+Odour3SubOdour1OFF = (Odour3OFFnormF0 - Odour1OFFnormF0);
+intstatOdour3SubOdour1OFF = sum(Odour3SubOdour1OFF);
+
+Odour3SubOdour1Firstquarter = (Odour3FirstquarternormF0 - Odour1FirstquarternormF0);
+intstatOdour3SubOdour1Firstquarter = sum(Odour3SubOdour1Firstquarter);
+
+Odour3SubOdour1Secondquarter = (Odour3SecondquarternormF0 - Odour1SecondquarternormF0);
+intstatOdour3SubOdour1Secondquarter = sum(Odour3SubOdour1Secondquarter);
+
+Odour3SubOdour1Thirdquarter = (Odour3ThirdquarternormF0 - Odour1ThirdquarternormF0);
+intstatOdour3SubOdour1Thirdquarter = sum(Odour3SubOdour1Thirdquarter);
+
+Odour3SubOdour1Fourthquarter = (Odour3FourthquarternormF0 - Odour1FourthquarternormF0);
+intstatOdour3SubOdour1Fourthquarter = sum(Odour3SubOdour1Fourthquarter);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%% MEAN TRACES and SEM for each odour presentation %%%%%%%%%%%
+        
+% create a new bigger matrix
+Odour1Trace = M(159:630,2:end);
+Odour2Trace = M(820:1291,2:end);
+Odour3Trace = M(1481:1952,2:end);
+% Normalizing frames to F0
+Odour1TracenormF0 = (Odour1Trace - meanFZero1)./meanFZero1;
+Odour2TracenormF0 = (Odour2Trace - meanFZero2)./meanFZero2;
+Odour3TracenormF0 = (Odour3Trace - meanFZero3)./meanFZero3;
+            
+% trace the graph with the SEM and mean
+traceOdour1mean = mean(Odour1TracenormF0,2);
+traceOdour2mean = mean(Odour2TracenormF0,2);
+traceOdour3mean = mean(Odour3TracenormF0,2);
+traceOdour1meanSEM = std(Odour1TracenormF0,0,2)/sqrt(N);
+traceOdour2meanSEM = std(Odour2TracenormF0,0,2)/sqrt(N);
+traceOdour3meanSEM = std(Odour3TracenormF0,0,2)/sqrt(N);
+
+        %Traces for each odour substraction
+
+%New Matrices and Traces for Odour3 - Odour2 
+Odour3minusOdour2 = (Odour3TracenormF0 - Odour2TracenormF0);
+traceOdour3minusOdour2 = mean(Odour3minusOdour2,2);
+traceOdour3minusOdour2SEM = std(Odour3minusOdour2,0,2)/sqrt(N);
+
+%New Matrices and Traces for Odour2 - Odour1
+Odour2minusOdour1 = (Odour2TracenormF0 - Odour1TracenormF0);
+traceOdour2minusOdour1 = mean(Odour2minusOdour1,2);
+traceOdour2minusOdour1SEM = std(Odour2minusOdour1,0,2)/sqrt(N);
+
+%New Matrices and Traces for Odour3 - Odour1
+Odour3minusOdour1 = (Odour3TracenormF0 - Odour1TracenormF0);
+traceOdour3minusOdour1 = mean(Odour3minusOdour1,2);
+traceOdour3minusOdour1SEM = std(Odour3minusOdour1,0,2)/sqrt(N);
