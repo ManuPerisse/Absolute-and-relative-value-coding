@@ -63,26 +63,6 @@ meanSEMFirstShock1 = std(mean(normFirstShock1))/sqrt(N);
 meanSEMFirstShock2 = std(mean(normFirstShock2))/sqrt(N);
 
 
-% mean peak DF/F0 for whole 1min sequence
-peakSequence1 = mean(max(normSeq1));
-peakstatSequence1 = max(normSeq1);
-peakSequence2 = mean(max(normSeq2));
-peakstatSequence2 = max(normSeq2);
-% SEM peak DF/F0 for whole 1min sequence
-peakSEMSequence1 = std(max(normSeq1))/sqrt(N);
-peakSEMSequence2 = std(max(normSeq2))/sqrt(N);
-
-
-% mean peak DF/F0 for first shock stimulation in every sequence
-peakFirstShock1 = mean(max(normFirstShock1));
-peakstatFirstShock1 = max(normFirstShock1);
-peakFirstShock2 = mean(max(normFirstShock2));
-peakstatFirstShock2 = max(normFirstShock2);
-% SEM peak DF/F0 for first shock stimulation in every sequence
-peakSEMFirstShock1 = std(max(normFirstShock1))/sqrt(N);
-peakSEMSFirstShock2 = std(max(normFirstShock2))/sqrt(N);
-
-
 % extract mean integral DF/F0 for whole 1min sequence
 intSequence1 = mean(sum(normSeq1));
 intstatSequence1 = sum(normSeq1);
@@ -91,7 +71,6 @@ intstatSequence2 = sum(normSeq2);
 % calculate SEM of integral DF/F0 for whole 1min sequence
 intSEMSequence1 = std(sum(normSeq1))/sqrt(N);
 intSEMSequence2 = std(sum(normSeq2))/sqrt(N);
-
 
 
 %for figure mean and SEM
@@ -114,11 +93,3 @@ normshockFirstShock2 = (shockFirstShock2 - meanFZero2)./meanFZero2;
 traceFirstShock2 = mean(normshockFirstShock2,2);
 traceFirstShock2SEM = std(normshockFirstShock2,0,2)/sqrt(N);
 
-
-
-
-hold on
-
-plot(traceshockSequence1, '-r', 'linewidth',3);
-
-plot(traceshockSequence2, '-b', 'linewidth',3);
